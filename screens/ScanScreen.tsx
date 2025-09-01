@@ -8,6 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import type { Meal } from '../types';
+import { auth } from '../lib/firebase';
 
 export default function ScanScreen({ navigation }: any) {
   const theme = useTheme();
@@ -98,10 +99,15 @@ export default function ScanScreen({ navigation }: any) {
 
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 25000);
-      const response = await fetch('http://192.168.1.130:8000/analyze', {
+      // Get Firebase ID token for current user
+      const idToken = await auth.currentUser?.getIdToken?.();
+
+      const apiBase = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.1.130:8000';
+      const response = await fetch(`${apiBase}/analyze`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
+          ...(idToken ? { Authorization: `Bearer ${idToken}` } : {}),
         },
         body: form as any,
         signal: controller.signal as any,
