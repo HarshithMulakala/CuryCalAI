@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import Header from '../components/Header';
 import FoodItemCard from '../components/FoodItemCard';
@@ -8,6 +9,7 @@ import { addMeal } from '../lib/history';
 
 export default function ResultsScreen({ navigation, route }: any) {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const meal = route.params?.meal;
   const [saving, setSaving] = useState(false);
   const [customModalOpen, setCustomModalOpen] = useState(false);
@@ -44,10 +46,10 @@ export default function ResultsScreen({ navigation, route }: any) {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top', 'bottom']}> 
       <Header title={route.params?.swapped ? `${route.params?.swapLabel}` : 'Scan Results'} subtitle={`${meal.name} • ${meal.totalCalories} kcal`} onBack={() => navigation.goBack()} />
 
-      <ScrollView style={{ padding: 16 }}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" style={{ padding: 16 }}>
         {meal.items.map((it: any) => (
           <FoodItemCard key={it.id} item={it} />
         ))}
@@ -90,7 +92,7 @@ export default function ResultsScreen({ navigation, route }: any) {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 

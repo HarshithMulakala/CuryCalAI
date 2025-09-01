@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 
 export default function Header({
@@ -14,8 +15,12 @@ export default function Header({
   right?: React.ReactNode;
 }) {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.surface }]}> 
+    <View style={[
+      styles.container,
+      { backgroundColor: theme.colors.surface, paddingTop: Math.max(12, insets.top) }
+    ]}> 
       <View style={styles.row}>
         <TouchableOpacity onPress={onBack} style={styles.left} disabled={!onBack}>
           <Text style={[styles.back, { color: theme.colors.primary }]}>{onBack ? '←' : ''}</Text>
@@ -41,7 +46,7 @@ const styles = StyleSheet.create({
   left: { width: 40 },
   back: { fontSize: 22 },
   center: { flex: 1, alignItems: 'center' },
-  title: { fontSize: 18, fontWeight: '700' },
-  subtitle: { fontSize: 12, marginTop: 2 },
+  title: { fontSize: 20, fontWeight: '700' },
+  subtitle: { fontSize: 13, marginTop: 2 },
   right: { width: 40, alignItems: 'flex-end' },
 });

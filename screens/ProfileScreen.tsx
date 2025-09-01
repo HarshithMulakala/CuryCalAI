@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Switch, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 
 export default function ProfileScreen() {
@@ -9,7 +10,7 @@ export default function ProfileScreen() {
   const [noDairy, setNoDairy] = useState(false);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top', 'bottom']}> 
       <View style={{ padding: 16 }}>
         <Text style={{ fontSize: 20, fontWeight: '800', color: theme.colors.text }}>Profile</Text>
         <Text style={{ color: theme.colors.muted, marginTop: 6 }}>Manage dietary preferences</Text>
@@ -43,7 +44,7 @@ export default function ProfileScreen() {
           <Text style={{ color: theme.colors.text }}>About Swaasth</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

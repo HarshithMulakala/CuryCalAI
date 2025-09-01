@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import PrimaryButton from '../components/PrimaryButton';
 
 export default function OnboardingScreen({ navigation, onComplete }: any) {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const [step, setStep] = useState(1);
 
   // Step 1
@@ -94,19 +96,19 @@ export default function OnboardingScreen({ navigation, onComplete }: any) {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
-      <View style={styles.headerRow}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top', 'bottom']}> 
+      <View style={[styles.headerRow, { paddingTop: 8 }]}> 
         <Text style={{ color: theme.colors.muted }}>Step {step} of 3</Text>
         <TouchableOpacity onPress={() => onComplete && onComplete()}>
           <Text style={{ color: theme.colors.primary }}>Skip</Text>
         </TouchableOpacity>
       </View>
 
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, paddingBottom: 24 }}>
         {renderStep()}
       </ScrollView>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, { paddingBottom: Math.max(16, insets.bottom + 8) }]}>
         {step > 1 ? (
           <TouchableOpacity onPress={() => setStep(s => s - 1)} style={[styles.footerBtn, { marginRight: 12 }]}>
             <Text style={{ color: theme.colors.text }}>Back</Text>
@@ -119,7 +121,7 @@ export default function OnboardingScreen({ navigation, onComplete }: any) {
           <PrimaryButton onPress={() => onComplete && onComplete()} style={{ flex: 1 }}>{'Finish'}</PrimaryButton>
         )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -127,13 +129,13 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   headerRow: { flexDirection: 'row', justifyContent: 'space-between', padding: 16 },
   question: { fontSize: 22, fontWeight: '800', marginBottom: 6 },
-  help: { fontSize: 13, marginBottom: 12 },
-  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  option: { padding: 14, borderRadius: 12, minWidth: '48%', marginVertical: 6 },
-  gridSingle: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  optionSingle: { padding: 14, borderRadius: 12, minWidth: '48%', marginVertical: 6, borderWidth: 1 },
-  rowOptions: { flexDirection: 'row', marginTop: 12, gap: 12 },
-  pill: { paddingVertical: 12, paddingHorizontal: 18, borderRadius: 10, marginRight: 12 },
+  help: { fontSize: 14, marginBottom: 14 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 14 },
+  option: { padding: 18, borderRadius: 14, minWidth: '48%', marginVertical: 6 },
+  gridSingle: { flexDirection: 'row', flexWrap: 'wrap', gap: 14 },
+  optionSingle: { padding: 18, borderRadius: 14, minWidth: '48%', marginVertical: 6, borderWidth: 1 },
+  rowOptions: { flexDirection: 'row', marginTop: 14, gap: 14 },
+  pill: { paddingVertical: 14, paddingHorizontal: 20, borderRadius: 12, marginRight: 12 },
   footer: { padding: 16, flexDirection: 'row', alignItems: 'center' },
-  footerBtn: { padding: 12, borderRadius: 10 },
+  footerBtn: { padding: 14, borderRadius: 12 },
 });

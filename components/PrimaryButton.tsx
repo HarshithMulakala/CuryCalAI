@@ -27,6 +27,7 @@ export default function PrimaryButton({
         }, 
         style
       ]} 
+      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       activeOpacity={disabled ? 1 : 0.85}
       disabled={disabled}
     >
@@ -40,18 +41,19 @@ export default function PrimaryButton({
 
 const styles = StyleSheet.create({
   btn: {
-    paddingVertical: 14,
-    paddingHorizontal: 18,
-    borderRadius: 12,
+    paddingVertical: 18,
+    paddingHorizontal: 22,
+    borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
+    minHeight: 52,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.12,
     shadowRadius: 12,
     elevation: 3,
   },
-  text: { fontSize: 16, fontWeight: '700' },
+  text: { fontSize: 18, fontWeight: '700' },
   row: { flexDirection: 'row', alignItems: 'center' },
   icon: { marginRight: 8 },
 });

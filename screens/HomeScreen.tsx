@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import PrimaryButton from '../components/PrimaryButton';
 import FoodItemCard from '../components/FoodItemCard';
@@ -21,7 +22,8 @@ export default function HomeScreen({ navigation }: any) {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]} contentContainerStyle={{ padding: 16 }}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top', 'bottom']}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 16 }}>
       <View style={styles.headerRow}>
         <Text style={[styles.greeting, { color: theme.colors.text }]}>Hi there 👋</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Profile')}> 
@@ -40,23 +42,24 @@ export default function HomeScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      <Text style={[styles.sectionTitle, { color: theme.colors.text, marginTop: 18 }]}>Quick Suggestions</Text>
+      <Text style={[styles.sectionTitle, { color: theme.colors.text, marginTop: 12 }]}>Quick Suggestions</Text>
       <View>
         <FoodItemCard item={sampleMeal.items[0]} />
         <FoodItemCard item={sampleMeal.items[1]} />
       </View>
 
-      <View style={{ height: 80 }} />
-    </ScrollView>
+      <View style={{ height: 24 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
   headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  greeting: { fontSize: 20, fontWeight: '700' },
+  greeting: { fontSize: 22, fontWeight: '700' },
   hero: { padding: 18, borderRadius: 16 },
-  heroTitle: { fontSize: 20, fontWeight: '800' },
-  heroSub: { marginTop: 6, fontSize: 13 },
-  sectionTitle: { fontSize: 16, fontWeight: '700' },
+  heroTitle: { fontSize: 24, fontWeight: '800' },
+  heroSub: { marginTop: 8, fontSize: 14 },
+  sectionTitle: { fontSize: 18, fontWeight: '700' },
 });

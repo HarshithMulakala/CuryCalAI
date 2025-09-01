@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import PrimaryButton from '../components/PrimaryButton';
 
@@ -29,7 +30,7 @@ export default function ScanScreen({ navigation }: any) {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}> 
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top', 'bottom']}> 
       <View style={[styles.cameraPlaceholder, { backgroundColor: theme.colors.surface }]}> 
         <Text style={{ color: theme.colors.muted }}>Camera preview (placeholder)</Text>
       </View>
@@ -57,12 +58,12 @@ export default function ScanScreen({ navigation }: any) {
           )}
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  cameraPlaceholder: { height: 320, margin: 16, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
+  cameraPlaceholder: { height: 360, margin: 16, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   smallBtn: { padding: 12, borderRadius: 10 },
 });

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import PrimaryButton from '../components/PrimaryButton';
 import { authService } from '../lib/auth';
 
 export default function SignUpScreen({ navigation, onSignup }: any) {
   const theme = useTheme();
+  const insets = useSafeAreaInsets();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,11 +49,12 @@ export default function SignUpScreen({ navigation, onSignup }: any) {
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-    > 
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]} edges={['top', 'bottom']}>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+        style={{ flex: 1 }}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? insets.top : 20}
+      > 
       <View style={styles.inner}>
         <View style={styles.header}>
           <Text style={[styles.logo, { color: theme.colors.primary }]}>Swaasth</Text>
@@ -94,7 +97,7 @@ export default function SignUpScreen({ navigation, onSignup }: any) {
 
           <PrimaryButton 
             onPress={handleEmailSignup} 
-            style={{ marginTop: 20 }}
+            style={{ marginTop: 16 }}
             disabled={loading}
           >
             {loading ? (
@@ -126,7 +129,7 @@ export default function SignUpScreen({ navigation, onSignup }: any) {
           </View>
 
           <TouchableOpacity 
-            style={{ marginTop: 20 }} 
+            style={{ marginTop: 16 }} 
             onPress={() => navigation.navigate('Login')}
             disabled={loading}
           > 
@@ -136,7 +139,8 @@ export default function SignUpScreen({ navigation, onSignup }: any) {
           </TouchableOpacity>
         </View>
       </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -191,7 +195,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, 
     paddingVertical: 16, 
     marginBottom: 16,
-    fontSize: 16
+    fontSize: 18
   },
   or: { 
     textAlign: 'center', 
@@ -206,8 +210,8 @@ const styles = StyleSheet.create({
     marginBottom: 8 
   },
   social: { 
-    width: 60, 
-    height: 50, 
+    width: 68, 
+    height: 56, 
     borderRadius: 12, 
     alignItems: 'center', 
     justifyContent: 'center',
