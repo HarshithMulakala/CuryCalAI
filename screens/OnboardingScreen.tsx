@@ -37,7 +37,7 @@ export default function OnboardingScreen({ navigation, onComplete }: any) {
       return (
         <View>
           <Text style={[styles.question, { color: theme.colors.text }]}>What are your goals?</Text>
-          <Text style={[styles.help, { color: theme.colors.muted }]}>Select all that apply — tailored for Indian diets</Text>
+          <Text style={[styles.help, { color: theme.colors.muted }]}>Select all that apply — tailored for South Asian diets</Text>
           <View style={styles.grid}>
             {goals.map(g => {
               const active = selectedGoals.includes(g.key);

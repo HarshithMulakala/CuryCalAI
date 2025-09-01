@@ -41,7 +41,7 @@ export default function ProfileScreen() {
           <Text style={{ color: theme.colors.text }}>Send feedback</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.card, { backgroundColor: theme.colors.surface, marginTop: 12 }]}>
-          <Text style={{ color: theme.colors.text }}>About Swaasth</Text>
+          <Text style={{ color: theme.colors.text }}>About CurryCal</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

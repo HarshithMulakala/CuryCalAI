@@ -25,7 +25,7 @@ export default function HistoryScreen({ navigation }: any) {
               <Text style={{ color: theme.colors.text, fontWeight: '700' }}>{m.name || 'Meal'}</Text>
               <Text style={{ color: theme.colors.muted }}>{new Date(m.timestamp).toLocaleString()}</Text>
             </View>
-            <Text style={{ color: theme.colors.muted, fontWeight: '700' }}>{m.totalCalories} kcal</Text>
+            <Text style={{ color: theme.colors.muted, fontWeight: '700' }}>{Math.round(m.totalCalories)} cal</Text>
           </TouchableOpacity>
         ))
       )}

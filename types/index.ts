@@ -2,6 +2,9 @@ export type Macro = {
   carbs: number; // grams
   protein: number; // grams
   fat: number; // grams
+  fiber?: number; // grams
+  sugar?: number; // grams
+  sodium?: number; // milligrams
 };
 
 export type FoodItem = {

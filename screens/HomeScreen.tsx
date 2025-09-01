@@ -32,7 +32,7 @@ export default function HomeScreen({ navigation }: any) {
       </View>
 
       <View style={[styles.hero, { backgroundColor: theme.colors.surface }]}> 
-        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Track Indian meals effortlessly</Text>
+        <Text style={[styles.heroTitle, { color: theme.colors.text }]}>Track South Asian meals effortlessly</Text>
         <Text style={[styles.heroSub, { color: theme.colors.muted }]}>Scan thalis, biryanis, chole, dosa — get calories & smart swaps</Text>
 
         <PrimaryButton onPress={() => navigation.navigate('Scan')} style={{ marginTop: 18, borderRadius: 14 }}>Scan My Meal</PrimaryButton>

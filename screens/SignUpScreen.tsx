@@ -57,9 +57,9 @@ export default function SignUpScreen({ navigation, onSignup }: any) {
       > 
       <View style={styles.inner}>
         <View style={styles.header}>
-          <Text style={[styles.logo, { color: theme.colors.primary }]}>Swaasth</Text>
+          <Text style={[styles.logo, { color: theme.colors.primary }]}>CurryCal</Text>
           <Text style={[styles.h1, { color: theme.colors.text }]}>Create your account</Text>
-          <Text style={[styles.sub, { color: theme.colors.muted }]}>Sign up to personalize your Indian meal recommendations</Text>
+          <Text style={[styles.sub, { color: theme.colors.muted }]}>Sign up to personalize your South Asian meal recommendations</Text>
         </View>
 
         <View style={[styles.card, { backgroundColor: theme.colors.surface }]}> 

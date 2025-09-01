@@ -51,9 +51,9 @@ export default function LoginScreen({ navigation, onLogin, onSignup }: any) {
       > 
       <View style={styles.inner}>
         <View style={styles.header}>
-          <Text style={[styles.logo, { color: theme.colors.primary }]}>Swaasth</Text>
+          <Text style={[styles.logo, { color: theme.colors.primary }]}>CurryCal</Text>
           <Text style={[styles.h1, { color: theme.colors.text }]}>Welcome back</Text>
-          <Text style={[styles.sub, { color: theme.colors.muted }]}>Login to continue — tailored for Indian meals</Text>
+          <Text style={[styles.sub, { color: theme.colors.muted }]}>Login to continue — tailored for South Asian meals</Text>
         </View>
 
         <View style={[styles.card, { backgroundColor: theme.colors.surface }]}> 
