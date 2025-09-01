@@ -1,44 +1,228 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert, ActivityIndicator } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
 import PrimaryButton from '../components/PrimaryButton';
+import { authService } from '../lib/auth';
 
 export default function SignUpScreen({ navigation, onSignup }: any) {
   const theme = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleEmailSignup = async () => {
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert('Error', 'Password must be at least 6 characters long');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await authService.signUp(email.trim(), password);
+      onSignup && onSignup();
+    } catch (error: any) {
+      Alert.alert('Sign Up Failed', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    setGoogleLoading(true);
+    try {
+      await authService.signInWithGoogle();
+      onSignup && onSignup();
+    } catch (error: any) {
+      Alert.alert('Google Sign-In Failed', error.message);
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={[styles.container, { backgroundColor: theme.colors.background }]}> 
+    <KeyboardAvoidingView 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
+    > 
       <View style={styles.inner}>
-        <Text style={[styles.logo, { color: theme.colors.primary }]}>Swaasth</Text>
-        <Text style={[styles.h1, { color: theme.colors.text }]}>Create your account</Text>
-        <Text style={[styles.sub, { color: theme.colors.muted }]}>Sign up to personalize your Indian meal recommendations</Text>
-
-        <View style={[styles.card, { backgroundColor: theme.colors.surface }]}> 
-          <TextInput placeholder="Full name" placeholderTextColor={theme.colors.muted} value={name} onChangeText={setName} style={[styles.input, { color: theme.colors.text }]} />
-          <TextInput placeholder="Email" placeholderTextColor={theme.colors.muted} value={email} onChangeText={setEmail} style={[styles.input, { color: theme.colors.text }]} keyboardType="email-address" />
-          <TextInput placeholder="Password" placeholderTextColor={theme.colors.muted} value={password} onChangeText={setPassword} style={[styles.input, { color: theme.colors.text }]} secureTextEntry />
-
-          <PrimaryButton onPress={() => onSignup && onSignup()} style={{ marginTop: 10 }}>Create account</PrimaryButton>
-
-          <TouchableOpacity style={{ marginTop: 12 }} onPress={() => navigation.navigate('Login')}> 
-            <Text style={{ color: theme.colors.primary, textAlign: 'center' }}>Already have an account? Login</Text>
-          </TouchableOpacity>
+        <View style={styles.header}>
+          <Text style={[styles.logo, { color: theme.colors.primary }]}>Swaasth</Text>
+          <Text style={[styles.h1, { color: theme.colors.text }]}>Create your account</Text>
+          <Text style={[styles.sub, { color: theme.colors.muted }]}>Sign up to personalize your Indian meal recommendations</Text>
         </View>
 
+        <View style={[styles.card, { backgroundColor: theme.colors.surface }]}> 
+          <TextInput 
+            placeholder="Full name" 
+            placeholderTextColor={theme.colors.muted} 
+            value={name} 
+            onChangeText={setName} 
+            style={[styles.input, { color: theme.colors.text, borderBottomColor: theme.colors.muted }]}
+            autoCapitalize="words"
+            autoCorrect={false}
+            editable={!loading}
+          />
+          <TextInput 
+            placeholder="Email" 
+            placeholderTextColor={theme.colors.muted} 
+            value={email} 
+            onChangeText={setEmail} 
+            style={[styles.input, { color: theme.colors.text, borderBottomColor: theme.colors.muted }]} 
+            keyboardType="email-address" 
+            autoCapitalize="none"
+            autoCorrect={false}
+            editable={!loading}
+          />
+          <TextInput 
+            placeholder="Password" 
+            placeholderTextColor={theme.colors.muted} 
+            value={password} 
+            onChangeText={setPassword} 
+            style={[styles.input, { color: theme.colors.text, borderBottomColor: theme.colors.muted }]} 
+            secureTextEntry 
+            autoCapitalize="none"
+            editable={!loading}
+          />
+
+          <PrimaryButton 
+            onPress={handleEmailSignup} 
+            style={{ marginTop: 20 }}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" size="small" />
+            ) : (
+              'Create account'
+            )}
+          </PrimaryButton>
+
+          <Text style={[styles.or, { color: theme.colors.muted }]}>or continue with</Text>
+          <View style={styles.row}> 
+            <TouchableOpacity 
+              style={[styles.social, { backgroundColor: '#fff', borderWidth: 1, borderColor: theme.colors.muted }]}
+              onPress={handleGoogleSignup}
+              disabled={googleLoading}
+            >
+              {googleLoading ? (
+                <ActivityIndicator color="#4285F4" size="small" />
+              ) : (
+                <Text style={styles.googleText}>G</Text>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.social, { backgroundColor: '#000', opacity: 0.5 }]}
+              disabled={true}
+            > 
+              <Text style={{ color: '#fff' }}>🍎</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity 
+            style={{ marginTop: 20 }} 
+            onPress={() => navigation.navigate('Login')}
+            disabled={loading}
+          > 
+            <Text style={{ color: theme.colors.primary, textAlign: 'center', fontSize: 16 }}>
+              Already have an account? Login
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  inner: { padding: 20, flex: 1, justifyContent: 'center' },
-  logo: { fontSize: 32, fontWeight: '800', textAlign: 'center', marginBottom: 6 },
-  h1: { fontSize: 22, fontWeight: '700', textAlign: 'center' },
-  sub: { fontSize: 14, textAlign: 'center', marginBottom: 18 },
-  card: { padding: 16, borderRadius: 16, marginTop: 18 },
-  input: { borderBottomWidth: 1, borderColor: '#eee', paddingVertical: 10, marginBottom: 12 },
+  container: { 
+    flex: 1 
+  },
+  inner: { 
+    paddingHorizontal: 24, 
+    paddingVertical: 20, 
+    flex: 1, 
+    justifyContent: 'center',
+    maxWidth: 400,
+    alignSelf: 'center',
+    width: '100%'
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 32
+  },
+  logo: { 
+    fontSize: 36, 
+    fontWeight: '800', 
+    textAlign: 'center', 
+    marginBottom: 8 
+  },
+  h1: { 
+    fontSize: 24, 
+    fontWeight: '700', 
+    textAlign: 'center',
+    marginBottom: 8
+  },
+  sub: { 
+    fontSize: 16, 
+    textAlign: 'center', 
+    lineHeight: 22,
+    paddingHorizontal: 20
+  },
+  card: { 
+    padding: 24, 
+    borderRadius: 20, 
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  input: { 
+    borderBottomWidth: 1, 
+    paddingVertical: 16, 
+    marginBottom: 16,
+    fontSize: 16
+  },
+  or: { 
+    textAlign: 'center', 
+    marginTop: 24,
+    marginBottom: 16,
+    fontSize: 14
+  },
+  row: { 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    gap: 16, 
+    marginBottom: 8 
+  },
+  social: { 
+    width: 60, 
+    height: 50, 
+    borderRadius: 12, 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  googleText: { 
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    color: '#4285F4' 
+  },
 });

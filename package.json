@@ -1,5 +1,5 @@
 {
-  "name": "a0-project",
+  "name": "CurryCalAI",
   "version": "1.0.0",
   "license": "0BSD",
   "private": true,
@@ -21,6 +21,7 @@
     "expo": "53.0.22",
     "expo-camera": "~16.1.11",
     "expo-linear-gradient": "~14.1.5",
+    "firebase": "^12.2.1",
     "lucide-react-native": "0.542.0",
     "react": "19.0.0",
     "react-native": "0.79.5",
@@ -29,7 +30,10 @@
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "15.11.2",
-    "sonner-native": "0.21.1"
+    "sonner-native": "0.21.1",
+    "expo-auth-session": "~6.2.1",
+    "expo-crypto": "~14.1.5",
+    "expo-constants": "~17.1.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

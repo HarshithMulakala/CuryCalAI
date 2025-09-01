@@ -7,15 +7,29 @@ export default function PrimaryButton({
   onPress,
   style,
   icon,
+  disabled = false,
 }: {
   children: React.ReactNode;
   onPress?: () => void;
   style?: any;
   icon?: React.ReactNode;
+  disabled?: boolean;
 }) {
   const theme = useTheme();
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.btn, { backgroundColor: theme.colors.primary }, style]} activeOpacity={0.85}>
+    <TouchableOpacity 
+      onPress={disabled ? undefined : onPress} 
+      style={[
+        styles.btn, 
+        { 
+          backgroundColor: disabled ? theme.colors.muted : theme.colors.primary,
+          opacity: disabled ? 0.6 : 1
+        }, 
+        style
+      ]} 
+      activeOpacity={disabled ? 1 : 0.85}
+      disabled={disabled}
+    >
       <View style={styles.row}>
         {icon ? <View style={styles.icon}>{icon}</View> : null}
         <Text style={[styles.text, { color: '#fff' }]}>{children}</Text>
