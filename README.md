@@ -1,0 +1,1 @@
+TO START: npx expo start -c

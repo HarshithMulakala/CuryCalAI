@@ -25,6 +25,7 @@ const Tab = createBottomTabNavigator();
 function MainTabs() {
   return (
     <Tab.Navigator
+      id={undefined}
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
@@ -46,7 +47,7 @@ export default function App() {
       {/* <Toaster /> */}
       <ThemeProvider initialScheme={systemColorScheme === 'dark' ? 'dark' : 'light'}>
         <NavigationContainer theme={systemColorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <RootStack.Navigator screenOptions={{ headerShown: false }}>
+          <RootStack.Navigator id={undefined} screenOptions={{ headerShown: false }}>
             {!isAuthenticated ? (
               // Auth flow
               <>
