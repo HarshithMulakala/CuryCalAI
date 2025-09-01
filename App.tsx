@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, View, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Toaster } from 'sonner-native';
+// import { Toaster } from 'sonner-native';
 
 // Screens
 import LoginScreen from './screens/LoginScreen';
@@ -43,7 +43,7 @@ export default function App() {
   // Provide a simple context for theme and auth flows via ThemeProvider
   return (
     <SafeAreaProvider style={styles.container}>
-      <Toaster />
+      {/* <Toaster /> */}
       <ThemeProvider initialScheme={systemColorScheme === 'dark' ? 'dark' : 'light'}>
         <NavigationContainer theme={systemColorScheme === 'dark' ? DarkTheme : DefaultTheme}>
           <RootStack.Navigator screenOptions={{ headerShown: false }}>
